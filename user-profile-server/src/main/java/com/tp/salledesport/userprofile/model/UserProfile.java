@@ -21,6 +21,8 @@ public class UserProfile {
     private Double weight;
     private Integer age;
     private Gender sex;
+
+    private boolean subscription;
     private TrainingProfile trainingProfile;
 
     public UserProfile(Integer id, String userName, Double weight, Integer age, Gender sex, TrainingProfile trainingProfile) {
