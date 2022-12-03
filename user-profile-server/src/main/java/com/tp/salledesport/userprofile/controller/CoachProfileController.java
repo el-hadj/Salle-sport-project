@@ -22,14 +22,14 @@ public class CoachProfileController {
     @GetMapping("/{id}")
     public ResponseEntity<CoachProfile> getCoachById(@PathVariable Integer id){
         CoachProfile coachProfile = coachProfileService.findCoachById(id);
-        log.info("user id find {}", coachProfile.getId());
+        log.info("user id find {}", coachProfile.getIdCoach());
         return new ResponseEntity<>(coachProfile, HttpStatus.OK);
     }
 
     @PostMapping("/add")
     public ResponseEntity<CoachProfile> registerCoach (@RequestBody CoachProfile coachProfile){
         CoachProfile coachProfile1 = coachProfileService.addCoach(coachProfile);
-        log.info("New user registration {}", coachProfile.getId());
+        log.info("New user registration {}", coachProfile.getIdCoach());
         return new ResponseEntity<>(coachProfile1, HttpStatus.CREATED);
     }
 }

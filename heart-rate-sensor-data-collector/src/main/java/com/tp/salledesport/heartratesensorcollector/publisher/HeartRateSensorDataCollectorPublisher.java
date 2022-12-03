@@ -1,35 +1,41 @@
 package com.tp.salledesport.heartratesensorcollector.publisher;
 
-import com.tp.salledesport.heartratesensorcollector.config.ConfigHeartDataCollector;
+import com.tp.salledesport.heartratesensorcollector.config.MessageConfig;
 import com.tp.salledesport.heartratesensorcollector.dto.CustomMessage;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
+import java.util.Map;
 import java.util.UUID;
 
 @RestController
 public class HeartRateSensorDataCollectorPublisher {
 
 
-    @Autowired
+
     private RabbitTemplate template;
 
-
+    @Autowired
     public HeartRateSensorDataCollectorPublisher(RabbitTemplate template) {
         this.template = template;
     }
 
-    @PostMapping("/publish")
-    public String publishMessage(@RequestBody CustomMessage message){
-        message.setMessageId(UUID.randomUUID().toString());
-        message.setMessageDate(new Date());
-        template.convertAndSend(ConfigHeartDataCollector.EXCHANGE,
-                ConfigHeartDataCollector.ROUTING_KEY, message);
+    @RequestMapping(value ="/publish", method = RequestMethod.POST,
+            consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE,MediaType.APPLICATION_JSON_VALUE},
+            produces = {MediaType.APPLICATION_JSON_VALUE})
+    public String hearRateCollectData(@RequestBody Map<String,String> body){
+        CustomMessage message = new CustomMessage();
 
-        return "Your heart rate has been publish";
+        message.setIdMessage(UUID.randomUUID().toString());
+        message.setIdHeartUser(Integer.valueOf(body.get("id")));
+        message.setUserId(Integer.valueOf(body.get("userId")));
+        message.setAge(Integer.valueOf(body.get("age")));
+        message.setHeartRateNow(Float.valueOf(body.get("heartRateNow")));
+        template.convertAndSend(MessageConfig.EXCHANGE, MessageConfig.ROUTING_KEY, message);
+
+
+        return "Your heart Rate information has been uploaded with id:"+ message.getIdMessage();
     }
 }

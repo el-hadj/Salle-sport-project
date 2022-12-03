@@ -1,23 +1,22 @@
 package com.tp.salledesport.heartratesensorworker.dto;
 
+
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Data
 @Document
-@NoArgsConstructor
 @AllArgsConstructor
-public class HeartRateUser {
+@NoArgsConstructor
+public class Emergency {
 
-    @Id
-    private Integer id;
-    private Integer userId;
-    private Integer age;
-    private Float heartRateNow;
-
+    private Integer idEmergency;
+    private Integer idUser;
+    private Integer idCoach;
+    private LocalDateTime emergencytime;
 }

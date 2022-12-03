@@ -11,10 +11,12 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
 public class CustomMessage {
 
-    private String messageId;
-    private String message;
-    private Date messageDate;
+
+    private String idMessage;
+    private Integer idHeartUser;
+    private Integer userId;
+    private Integer age;
+    private Float heartRateNow;
 }

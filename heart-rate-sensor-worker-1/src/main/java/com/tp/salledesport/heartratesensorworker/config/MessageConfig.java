@@ -1,4 +1,4 @@
-package com.tp.salledesport.heartratesensorcollector.config;
+package com.tp.salledesport.heartratesensorworker.config;
 
 import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class ConfigHeartDataCollector {
+public class MessageConfig {
 
     public static final String QUEUE = "hr_data_collector";
     public static final String EXCHANGE = "data_sensor_exchange";

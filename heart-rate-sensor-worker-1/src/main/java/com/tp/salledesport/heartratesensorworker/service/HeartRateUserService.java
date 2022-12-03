@@ -3,7 +3,9 @@ package com.tp.salledesport.heartratesensorworker.service;
 
 import com.tp.salledesport.heartratesensorworker.dto.HeartRateUser;
 import com.tp.salledesport.heartratesensorworker.dto.User;
+import com.tp.salledesport.heartratesensorworker.repository.HeartRateRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -12,45 +14,38 @@ import java.time.LocalDate;
 @Slf4j
 public class HeartRateUserService {
 
+
     private HeartRateUser heartRateUser;
 
-    public Integer calculateAge() {
-        String yearOfbirth = heartRateUser.getYearOfBirth();
-        LocalDate currentDate = LocalDate.parse(yearOfbirth);
-        int yearOfBirthParse = currentDate.getYear();
-        int age;
-        age = 2022 - yearOfBirthParse;
-        return age;
+    private HeartRateRepository heartRateRepository;
+
+    private  User user;
+
+    @Autowired
+    public HeartRateUserService( HeartRateRepository heartRateRepository) {
+        this.heartRateRepository = heartRateRepository;
     }
 
-    public Float calculateMaxHeartRate() {
+    public Float calculateMaxHeartRate(int age) {
+        //La méthode la plus fiable que nous vous conseillons : FC max = 207 – 0,7 x âge
         float rate;
-        int age = calculateAge();
-        rate = 220 - age;
+        rate = (float) (207 - 0.7 * age);
         return rate;
     }
 
-    public Float minTargetHeartRate() {
-        float minHearRate;
-        minHearRate = (float) (0.5 - calculateMaxHeartRate());
-        return minHearRate;
-    }
 
-    public Float maxTargetHeartRate() {
-        float maxHeartRate;
-        maxHeartRate = (float) 0.85 - calculateMaxHeartRate();
-        return maxHeartRate;
-    }
-
-    public Boolean SuscribingChecks(User user) {
-
-        if (user.isSubscription()) {
-            log.info("the user {} is well subscribe ", user.getUserName());
+    public boolean emergencyChecks(Integer idUser){
+        HeartRateUser heartRateUser = heartRateRepository.findByUserId(idUser)
+                .orElseThrow(
+                        ()-> new RuntimeException("this idUser " + idUser + " does not exit")
+                );
+        Float heartRateNow = heartRateUser.getHeartRateNow();
+        if(heartRateNow < calculateMaxHeartRate(heartRateUser.getAge())){
+            log.info("the user  {} is having a heartrate trouble ", heartRateUser.getUserId());
             return true;
         }
-        log.info("the user {} is not subscribe ", user.getUserName());
+         log.info("the user  {} is not having a heartrate trouble ", heartRateUser.getUserId());
         return false;
     }
-
 
 }

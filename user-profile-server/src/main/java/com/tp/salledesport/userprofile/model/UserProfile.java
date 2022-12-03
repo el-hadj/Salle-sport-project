@@ -4,10 +4,7 @@ package com.tp.salledesport.userprofile.model;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Data
 @Entity
@@ -21,17 +18,18 @@ public class UserProfile {
     private Double weight;
     private Integer age;
     private Gender sex;
-
     private boolean subscription;
     private TrainingProfile trainingProfile;
 
-    public UserProfile(Integer id, String userName, Double weight, Integer age, Gender sex, TrainingProfile trainingProfile) {
+    private Integer coachId;
+
+    public UserProfile(Integer id, String userName, Double weight, Integer age, Gender sex, Integer coachId) {
         this.id = id;
         this.userName = userName;
         this.weight = weight;
         this.age = age;
         this.sex = sex;
-        this.trainingProfile = trainingProfile;
+        this.coachId = coachId;
     }
 
     public UserProfile(String userName, Double weight, Integer age, Gender sex, TrainingProfile trainingProfile) {
@@ -39,6 +37,6 @@ public class UserProfile {
         this.weight = weight;
         this.age = age;
         this.sex = sex;
-        this.trainingProfile = trainingProfile;
+        //this.coachProfile = coachProfile;
     }
 }
