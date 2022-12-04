@@ -17,7 +17,7 @@ public class MessageConfig {
 
     @Bean
     public Queue queue(){
-        return new Queue(QUEUE);
+        return new Queue(QUEUE, false);
     }
 
     @Bean
@@ -25,6 +25,7 @@ public class MessageConfig {
         return new TopicExchange(EXCHANGE);
     }
 
+    @Bean
     public Binding binding(Queue queue, TopicExchange exchange){
         return BindingBuilder
                 .bind(queue)
@@ -38,6 +39,7 @@ public class MessageConfig {
     }
 
 
+    @Bean
     public AmqpTemplate template(ConnectionFactory connectionFactory) {
         RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
         rabbitTemplate.setMessageConverter(converter());

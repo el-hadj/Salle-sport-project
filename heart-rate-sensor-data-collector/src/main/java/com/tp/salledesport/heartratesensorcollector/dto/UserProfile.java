@@ -4,20 +4,18 @@ package com.tp.salledesport.heartratesensorcollector.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
-
-import java.util.Date;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CustomMessage {
+public class UserProfile {
 
 
-    private String idMessage;
-    private Integer idHeartUser;
-    private Integer userId;
+    private Integer id;
+    private String userName;
+    private Double weight;
     private Integer age;
-    private Float heartRateNow;
+    private boolean subscription;
+    private Integer coachId;
 
 }

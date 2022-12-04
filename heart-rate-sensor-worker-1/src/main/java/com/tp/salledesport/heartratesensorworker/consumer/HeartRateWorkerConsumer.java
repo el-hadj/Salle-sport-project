@@ -32,7 +32,15 @@ public class HeartRateWorkerConsumer {
         heartRateUser.setAge(customMessage.getAge());
         heartRateUser.setHeartRateNow(customMessage.getHeartRateNow());
 
-        log.info("this user heart rate {} information has been successfully saved", heartRateUser.getUserId());
-        return heartRateRepository.insert(heartRateUser);
+
+        if (heartRateRepository.existsById(heartRateUser.getId())) {
+            log.info("this user heart rate {} information has already exists", heartRateUser.getUserId());
+
+        }else {
+            log.info("this user heart rate {} information has been successfully saved", heartRateUser.getUserId());
+            heartRateRepository.save(heartRateUser);
+        }
+            return heartRateUser;
     }
+
 }

@@ -11,4 +11,5 @@ import java.util.Optional;
 public interface HeartRateRepository extends MongoRepository<HeartRateUser, Integer> {
 
     Optional<HeartRateUser> findByUserId(Integer idUser);
+    Optional<HeartRateUser> findById(Integer id);
 }
