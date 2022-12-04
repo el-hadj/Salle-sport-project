@@ -11,7 +11,9 @@
         <module>user-profile-server</module>
         <module>heart-rate-sensor-worker-1</module>
         <module>heart-rate-sensor-data-collector</module>
-        <module>EmergencyNotificationAgent</module>
+        <module>notification-channel-manager</module>
+        <module>emergency-notification-agent</module>
+
     </modules>
     <name>salle-de-sport</name>
     <description>TP de la salle de sport</description>
